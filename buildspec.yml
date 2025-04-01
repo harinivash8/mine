@@ -1,0 +1,22 @@
+yaml
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r requirements.txt
+  build:
+    commands:
+      - echo "Running application tests..."
+  post_build:
+    commands:
+      - echo "Preparing deployment..."
+      - zip -r app.zip *  
+      - aws s3 cp app.zip s3://YOUR_S3_BUCKET_NAME/
+
+artifacts:
+  files:
+    - app.zip
